@@ -25,7 +25,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::middleware(['web'])->group(function(){
     Route::get('/restaurants',[RestaurantController::class,'index'])->name('restaurants.index');
-});
+ });
 
 
 Route::middleware(['web','auth'])->group(function(){

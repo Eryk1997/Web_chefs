@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RestaurantSeeder::class,
             UserSeeder::class,
-
+            UserRestaurantSeeder::class,
         ]);
     }
 }
