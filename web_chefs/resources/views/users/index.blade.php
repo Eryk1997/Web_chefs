@@ -4,8 +4,20 @@
     @if (!is_null($user))
         <div class="row">
             <div class="card col-3 m-auto p-0">
-                <div class="card-header">
-                    User info
+                <div class="card-header row m-0">
+                    <div class="col-6 mt-2">
+                        User info
+                    </div>
+                    <a class="col-3" href="{{ route('user.edit') }}">
+                        <button class="btn btn-primary ">
+                            Update
+                        </button>
+                    </a>
+                    <form class="col-3" method="post" action="{{ route('user.destroy', auth()->user()) }}">
+                        @csrf
+                        @method('DELETE')
+                        <button class="btn btn-danger">Delete</button>
+                    </form>
                 </div>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">Name: {{ $user->name }}</li>
@@ -22,14 +34,16 @@
                         @foreach ($restaurants as $restaurant)
                             <div class="row m-0">
                                 <li class="list-group-item col-6">Name: {{ $restaurant->name }}</li>
-                                <form class="col-3" method="post" action="{{route('attach.restaurant',$restaurant)}}">
+                                <form class="col-3" method="post"
+                                    action="{{ route('attach.restaurant', $restaurant) }}">
                                     @csrf
                                     @method('PUT')
                                     <input hidden name="permission" value="{{ $restaurant }}">
                                     <button class="btn btn-primary"
                                         @if ($user->restaurants->contains($restaurant)) disabled @endif>Attach</button>
                                 </form>
-                                <form class="col-3" method="post" action="{{route('detach.restaurant',$restaurant)}}">
+                                <form class="col-3" method="post"
+                                    action="{{ route('detach.restaurant', $restaurant) }}">
                                     @csrf
                                     @method('PUT')
                                     <input hidden name="permission" value="{{ $restaurant }}">

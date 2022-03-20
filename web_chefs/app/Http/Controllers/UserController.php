@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserUpdateRequest;
+use App\Models\User;
 use App\Models\Restaurant;
 use Illuminate\Http\Request;
 
@@ -12,6 +14,25 @@ class UserController extends Controller
             'user' => auth()->user(),
             'restaurants' => Restaurant::all(),
         ]);
+    }
+
+
+    public function destroy(User $user){
+        $user->delete();
+        toast("Pomyślnie usunięto uzytkownika", 'success');
+        return \redirect('register');
+    }
+
+    public function edit(){
+        return view('users.edit',[
+            'user' => auth()->user()
+        ]);
+    }
+
+    public function update(User $user,UserUpdateRequest $request){
+        $user->fill($request->all())->save();
+        toast("Pomyślnie zaaktualizowano uzytkownika", 'success');
+        return back();
     }
 
     public function attachRestaurant(Restaurant $restaurant){
